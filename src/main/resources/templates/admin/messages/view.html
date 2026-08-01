@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Message')}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('messages')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Message')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Contact inbox</p><h1>Message</h1></div><a class="button button-ghost" th:href="@{/admin/messages}">Back to inbox</a></div>
+<article class="message-view"><header><span th:text="${#temporals.format(message.createdAt, 'MMMM dd, yyyy HH:mm')}">Date</span><h2 th:text="${message.subject}">Subject</h2><p>From <strong th:text="${message.name}">Name</strong> · <a th:href="${'mailto:' + message.email}" th:text="${message.email}">Email</a></p></header><div class="message-body" th:text="${message.message}">Message</div><div class="form-actions"><a class="button button-primary" th:href="${'mailto:' + message.email + '?subject=Re: ' + message.subject}">Reply by email ↗</a><form th:action="@{/admin/messages/{id}/delete(id=${message.id})}" method="post" onsubmit="return confirm('Delete this message?')"><button class="button button-danger">Delete message</button></form></div></article>
+</main></div></div></body></html>

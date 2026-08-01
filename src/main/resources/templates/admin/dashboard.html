@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Dashboard')}"></head>
+<body class="admin-body">
+<div class="admin-shell">
+    <aside th:replace="~{fragments/admin :: sidebar('dashboard')}"></aside>
+    <div class="admin-main">
+        <header th:replace="~{fragments/admin :: topbar('Dashboard')}"></header>
+        <main class="admin-content">
+            <div class="admin-page-head"><div><p>Overview</p><h1>Content at a glance</h1></div><a class="button button-primary" th:href="@{/admin/blogs/new}">New blog post</a></div>
+            <div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
+            <section class="stat-grid">
+                <a class="stat-card" th:href="@{/admin/blogs}"><small>Blog posts</small><strong th:text="${postCount}">0</strong></a>
+                <a class="stat-card" th:href="@{/admin/projects}"><small>Projects</small><strong th:text="${projectCount}">0</strong></a>
+                <a class="stat-card" th:href="@{/admin/experience}"><small>Roles</small><strong th:text="${experienceCount}">0</strong></a>
+                <a class="stat-card" th:href="@{/admin/skills}"><small>Skills</small><strong th:text="${skillCount}">0</strong></a>
+                <a class="stat-card" th:href="@{/admin/messages}"><small>Messages</small><strong th:text="${messageCount}">0</strong></a>
+            </section>
+            <section class="admin-grid">
+                <article class="admin-card">
+                    <div class="admin-card-head"><h2>Recently updated posts</h2><a class="text-link" th:href="@{/admin/blogs}">Manage →</a></div>
+                    <div class="admin-list">
+                        <a th:each="post : ${recentPosts}" th:href="@{/admin/blogs/{id}/edit(id=${post.id})}">
+                            <span><strong th:text="${post.title}">Post</strong><small th:text="${post.category}">Category</small></span>
+                            <span th:text="${post.status}">Draft</span>
+                        </a>
+                    </div>
+                </article>
+                <article class="admin-card">
+                    <div class="admin-card-head"><h2>Latest messages</h2><a class="text-link" th:href="@{/admin/messages}">Inbox →</a></div>
+                    <div class="admin-list">
+                        <a th:each="message : ${recentMessages}" th:href="@{/admin/messages/{id}(id=${message.id})}">
+                            <span><strong th:text="${message.subject}">Subject</strong><small th:text="${message.name}">Name</small></span>
+                            <span th:text="${message.read ? 'Read' : 'New'}">New</span>
+                        </a>
+                        <p th:if="${recentMessages.isEmpty()}" style="color:var(--subtle);font-size:.78rem">No messages yet.</p>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+</div>
+</body>
+</html>

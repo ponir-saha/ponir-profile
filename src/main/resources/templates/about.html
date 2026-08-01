@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head('About')}"></head>
+<body>
+<div class="site-shell">
+    <aside th:replace="~{fragments/public :: sidebar('about')}"></aside>
+    <div class="page-panel">
+        <header th:replace="~{fragments/public :: topbar('About')}"></header>
+        <main class="content-stack">
+            <section class="page-hero reveal">
+                <div>
+                    <p class="eyebrow">About me</p>
+                    <h1>Engineering depth.<br><span>Business perspective.</span></h1>
+                    <p class="lead" th:text="${profile.introduction}">Introduction</p>
+                </div>
+                <img th:src="${profile.portraitUrl}" th:alt="${profile.fullName}" class="about-portrait">
+            </section>
+
+            <section class="about-grid reveal">
+                <article class="prose-card">
+                    <p class="eyebrow">My story</p>
+                    <div class="prose preserve-lines" th:text="${profile.about}">About</div>
+                </article>
+                <aside class="fact-card">
+                    <p class="eyebrow">At a glance</p>
+                    <dl>
+                        <div><dt>Based in</dt><dd th:text="${profile.location}">Dhaka</dd></div>
+                        <div><dt>Experience</dt><dd><span th:text="${profile.yearsExperience}">13</span>+ years</dd></div>
+                        <div><dt>Education</dt><dd>BSc, Computer Science & Engineering<br>Siam University</dd></div>
+                        <div><dt>Certifications</dt><dd>Oracle Certified Java SE 7<br>Certified ScrumMaster®</dd></div>
+                    </dl>
+                    <a th:if="${profile.resumeUrl}" class="button button-primary full-width" th:href="${profile.resumeUrl}" target="_blank">Download résumé ↗</a>
+                </aside>
+            </section>
+
+            <section class="section-heading reveal">
+                <div><p class="eyebrow">Capabilities</p><h2>The toolkit behind the outcomes.</h2></div>
+            </section>
+            <section class="skill-cloud reveal">
+                <article th:each="skill : ${skills}" class="skill-pill-card">
+                    <div><small th:text="${skill.category}">Category</small><strong th:text="${skill.name}">Skill</strong></div>
+                    <span th:text="${skill.proficiency + '%'}">95%</span>
+                    <div class="skill-meter"><i th:style="${'width:' + skill.proficiency + '%'}"></i></div>
+                </article>
+            </section>
+        </main>
+        <footer th:replace="~{fragments/public :: footer}"></footer>
+    </div>
+</div>
+<div class="menu-backdrop" data-menu-close></div>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>

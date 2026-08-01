@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" th:content="${profile.introduction}">
+    <meta name="theme-color" content="#0d1117">
+    <title th:text="${title + ' · ' + profile.fullName}">Ponir Kumer Saha</title>
+    <script>
+        (() => {
+            const saved = localStorage.getItem('portfolio-theme');
+            const preferred = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+            document.documentElement.dataset.theme = saved || preferred;
+        })();
+    </script>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+<aside class="sidebar" id="site-sidebar" th:fragment="sidebar(active)">
+    <button class="sidebar-close" type="button" data-menu-close aria-label="Close navigation">×</button>
+    <a class="identity" th:href="@{/}">
+        <span class="portrait-frame">
+            <img th:src="${profile.portraitUrl}" th:alt="${profile.fullName}" class="portrait">
+            <span class="availability-dot" title="Available for the right opportunity"></span>
+        </span>
+        <strong th:text="${profile.fullName}">Ponir Kumer Saha</strong>
+        <span th:text="${profile.headline}">Principal Engineer</span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Primary navigation">
+        <a th:href="@{/}" th:classappend="${active == 'home'} ? 'active'">
+            <span class="nav-icon">⌂</span> Home
+        </a>
+        <a th:href="@{/about}" th:classappend="${active == 'about'} ? 'active'">
+            <span class="nav-icon">◎</span> About
+        </a>
+        <a th:href="@{/experience}" th:classappend="${active == 'experience'} ? 'active'">
+            <span class="nav-icon">↗</span> Experience
+        </a>
+        <a th:href="@{/projects}" th:classappend="${active == 'projects'} ? 'active'">
+            <span class="nav-icon">◇</span> Projects
+        </a>
+        <a th:href="@{/blog}" th:classappend="${active == 'blog'} ? 'active'">
+            <span class="nav-icon">✦</span> Writing
+        </a>
+        <a th:href="@{/contact}" th:classappend="${active == 'contact'} ? 'active'">
+            <span class="nav-icon">↘</span> Contact
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <p class="availability"><span></span><span th:text="${profile.availability}">Available</span></p>
+        <div class="socials">
+            <a th:if="${profile.linkedinUrl}" th:href="${profile.linkedinUrl}" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
+            <a th:if="${profile.githubUrl}" th:href="${profile.githubUrl}" target="_blank" rel="noreferrer" aria-label="GitHub">gh</a>
+            <a th:href="${'mailto:' + profile.email}" aria-label="Email">@</a>
+        </div>
+    </div>
+</aside>
+
+<header class="topbar" th:fragment="topbar(label)">
+    <button class="menu-toggle" type="button" data-menu-open aria-label="Open navigation">☰</button>
+    <span class="breadcrumb" th:text="${label}">Home</span>
+    <div class="topbar-actions">
+        <a class="topbar-link" th:href="@{/contact}">Let's talk</a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch color theme">
+            <span class="theme-sun">☀</span><span class="theme-moon">☾</span>
+        </button>
+    </div>
+</header>
+
+<footer class="site-footer" th:fragment="footer">
+    <p>© <span th:text="${currentYear}">2026</span> <span th:text="${profile.fullName}">Ponir Kumer Saha</span>. Built with Spring Boot and thoughtful defaults.</p>
+    <div>
+        <a th:href="@{/admin}">Admin</a>
+        <a th:if="${profile.resumeUrl}" th:href="${profile.resumeUrl}" target="_blank">Résumé</a>
+    </div>
+</footer>
+</body>
+</html>

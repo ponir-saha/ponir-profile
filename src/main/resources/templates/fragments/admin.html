@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title + ' · Portfolio CMS'}">Portfolio CMS</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body>
+<aside class="admin-sidebar" th:fragment="sidebar(active)">
+    <a class="admin-brand" th:href="@{/admin}"><span>PS</span><div><strong>Portfolio CMS</strong><small>Content control</small></div></a>
+    <nav class="admin-nav">
+        <a th:href="@{/admin}" th:classappend="${active == 'dashboard'} ? 'active'">Dashboard</a>
+        <a th:href="@{/admin/profile}" th:classappend="${active == 'profile'} ? 'active'">Profile</a>
+        <a th:href="@{/admin/skills}" th:classappend="${active == 'skills'} ? 'active'">Skills</a>
+        <a th:href="@{/admin/experience}" th:classappend="${active == 'experience'} ? 'active'">Experience</a>
+        <a th:href="@{/admin/projects}" th:classappend="${active == 'projects'} ? 'active'">Projects</a>
+        <a th:href="@{/admin/blogs}" th:classappend="${active == 'blogs'} ? 'active'">Blog posts</a>
+        <a th:href="@{/admin/messages}" th:classappend="${active == 'messages'} ? 'active'">Messages <em th:if="${unreadMessageCount > 0}" th:text="${unreadMessageCount}">1</em></a>
+    </nav>
+    <div class="admin-sidebar-bottom">
+        <a th:href="@{/}" target="_blank">View portfolio ↗</a>
+        <form th:action="@{/logout}" method="post"><button type="submit">Sign out</button></form>
+    </div>
+</aside>
+
+<header class="admin-topbar" th:fragment="topbar(title)">
+    <strong th:text="${title}">Dashboard</strong>
+    <span>Signed in as administrator</span>
+</header>
+</body>
+</html>

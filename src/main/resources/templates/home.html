@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head('Home')}"></head>
+<body>
+<div class="site-shell">
+    <aside th:replace="~{fragments/public :: sidebar('home')}"></aside>
+    <div class="page-panel">
+        <header th:replace="~{fragments/public :: topbar('Home')}"></header>
+        <main class="content-stack">
+            <section class="hero-card reveal">
+                <div class="hero-copy">
+                    <p class="eyebrow" th:text="${profile.heroEyebrow}">From architecture to production</p>
+                    <h1 th:text="${profile.heroTitle}">I design resilient systems.</h1>
+                    <p class="hero-intro" th:text="${profile.introduction}">Introduction</p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" th:href="@{/projects}">Explore my work <span>↗</span></a>
+                        <a class="button button-ghost" th:href="@{/contact}">Start a conversation</a>
+                    </div>
+                    <dl class="metrics">
+                        <div><dt><span th:text="${profile.yearsExperience}">13</span>+</dt><dd>years building</dd></div>
+                        <div><dt><span th:text="${profile.projectsDelivered}">30</span>+</dt><dd>products & platforms</dd></div>
+                        <div><dt><span th:text="${profile.engineersMentored}">10</span>+</dt><dd>engineers led</dd></div>
+                    </dl>
+                </div>
+                <div class="architecture-visual" aria-hidden="true">
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
+                    <span class="node node-core">Strategy</span>
+                    <span class="node node-api">APIs</span>
+                    <span class="node node-ai">AI</span>
+                    <span class="node node-data">Data</span>
+                    <span class="node node-cloud">Cloud</span>
+                </div>
+            </section>
+
+            <section class="section-heading reveal">
+                <div><p class="eyebrow">What I bring</p><h2>Senior judgment, hands-on delivery.</h2></div>
+                <a class="text-link" th:href="@{/about}">My full profile →</a>
+            </section>
+            <section class="expertise-grid reveal">
+                <article class="feature-card accent-violet">
+                    <span class="card-index">01</span>
+                    <h3>Architecture that survives change</h3>
+                    <p>Clear service boundaries, deliberate data ownership, resilient messaging, and pragmatic trade-offs.</p>
+                    <div class="tag-row"><span>DDD</span><span>Kafka</span><span>CQRS</span></div>
+                </article>
+                <article class="feature-card accent-cyan">
+                    <span class="card-index">02</span>
+                    <h3>AI grounded in real knowledge</h3>
+                    <p>Enterprise RAG and agent workflows designed for traceability, evaluation, and trustworthy outcomes.</p>
+                    <div class="tag-row"><span>Spring AI</span><span>RAG</span><span>OpenSearch</span></div>
+                </article>
+                <article class="feature-card accent-gold">
+                    <span class="card-index">03</span>
+                    <h3>Teams that own the outcome</h3>
+                    <p>Technical direction, mentoring, and delivery practices that move complex programs forward.</p>
+                    <div class="tag-row"><span>Leadership</span><span>Reviews</span><span>Delivery</span></div>
+                </article>
+            </section>
+
+            <section class="split-section reveal">
+                <div class="section-heading compact">
+                    <div><p class="eyebrow">Selected work</p><h2>Products built around real operations.</h2></div>
+                    <a class="text-link" th:href="@{/projects}">All projects →</a>
+                </div>
+                <div class="project-list">
+                    <a class="project-row" th:each="project, stat : ${featuredProjects}" th:href="@{/projects/{slug}(slug=${project.slug})}">
+                        <span class="project-number" th:text="${'0' + (stat.index + 1)}">01</span>
+                        <span class="project-main"><small th:text="${project.eyebrow}">SaaS</small><strong th:text="${project.title}">Project</strong><span th:text="${project.summary}">Summary</span></span>
+                        <span class="project-arrow">↗</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="split-section reveal">
+                <div class="section-heading compact">
+                    <div><p class="eyebrow">Latest writing</p><h2>Notes from building complex systems.</h2></div>
+                    <a class="text-link" th:href="@{/blog}">All articles →</a>
+                </div>
+                <div class="post-list">
+                    <a class="post-row" th:each="post : ${latestPosts}" th:href="@{/blog/{slug}(slug=${post.slug})}">
+                        <time th:text="${#temporals.format(post.publishedAt, 'MMM dd, yyyy')}">Jul 30, 2026</time>
+                        <span><small th:text="${post.category}">Architecture</small><strong th:text="${post.title}">Post title</strong></span>
+                        <span class="project-arrow">→</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="cta-card reveal">
+                <div>
+                    <p class="eyebrow">Have a difficult system to shape?</p>
+                    <h2>Let’s turn uncertainty into a clear engineering direction.</h2>
+                </div>
+                <a class="button button-light" th:href="@{/contact}">Let’s work together <span>↗</span></a>
+            </section>
+        </main>
+        <footer th:replace="~{fragments/public :: footer}"></footer>
+    </div>
+</div>
+<div class="menu-backdrop" data-menu-close></div>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>

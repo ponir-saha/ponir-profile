@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: ponir-saha-portfolio
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/portfolio}
+    username: ${SPRING_DATASOURCE_USERNAME:portfolio}
+    password: ${SPRING_DATASOURCE_PASSWORD:portfolio}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  thymeleaf:
+    cache: false
+server:
+  port: ${SERVER_PORT:9090}
+  error:
+    whitelabel:
+      enabled: false
+  forward-headers-strategy: framework
+
+portfolio:
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    password: ${ADMIN_PASSWORD:ChangeMe123!}

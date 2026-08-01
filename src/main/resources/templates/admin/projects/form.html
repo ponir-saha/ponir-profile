@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head(${project.id == null ? 'New project' : 'Edit project'})}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('projects')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Projects')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Work showcase</p><h1 th:text="${project.id == null ? 'Add project' : 'Edit project'}">Project</h1></div></div>
+<form class="admin-form-card" th:action="@{/admin/projects}" th:object="${project}" method="post"><input type="hidden" th:field="*{id}">
+<div class="form-grid two"><label><span>Project title</span><input th:field="*{title}" data-slug-source required><small class="field-error" th:errors="*{title}"></small></label><label><span>URL slug</span><input th:field="*{slug}" data-slug-target placeholder="generated-from-title"><small class="field-error" th:errors="*{slug}"></small></label></div>
+<label><span>Eyebrow / type</span><input th:field="*{eyebrow}" placeholder="AI learning platform"></label><label><span>Card summary</span><textarea th:field="*{summary}" rows="4" required></textarea><small class="field-error" th:errors="*{summary}"></small></label><label><span>Full description</span><textarea th:field="*{description}" rows="9" required></textarea><small class="field-error" th:errors="*{description}"></small></label>
+<label><span>Tech stack (comma separated)</span><input th:field="*{techStack}"></label><div class="form-grid two"><label><span>GitHub URL</span><input type="url" th:field="*{githubUrl}"></label><label><span>Live URL</span><input type="url" th:field="*{liveUrl}"></label></div><label><span>Sort order</span><input type="number" th:field="*{sortOrder}"></label>
+<div class="check-row"><label><input type="checkbox" th:field="*{published}"><span>Published</span></label><label><input type="checkbox" th:field="*{featured}"><span>Feature on homepage</span></label></div>
+<div class="form-actions"><button class="button button-primary">Save project</button><a class="button button-ghost" th:href="@{/admin/projects}">Cancel</a></div></form>
+</main></div></div><script th:src="@{/js/admin.js}"></script></body></html>

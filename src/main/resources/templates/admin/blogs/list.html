@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Blog posts')}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('blogs')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Blog posts')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Writing</p><h1>Blog posts</h1></div><a class="button button-primary" th:href="@{/admin/blogs/new}">New post</a></div><div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
+<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Article</th><th>Category</th><th>Status</th><th>Updated</th><th></th></tr></thead><tbody>
+<tr th:each="post : ${posts}"><td><strong th:text="${post.title}">Post</strong><small th:text="${post.slug}">slug</small></td><td th:text="${post.category}">Category</td><td th:text="${post.status}">Draft</td><td th:text="${#temporals.format(post.updatedAt, 'MMM dd, yyyy')}">Date</td><td><div class="row-actions"><a th:if="${post.status.name() == 'PUBLISHED'}" th:href="@{/blog/{slug}(slug=${post.slug})}" target="_blank">View</a><a th:href="@{/admin/blogs/{id}/edit(id=${post.id})}">Edit</a><form th:action="@{/admin/blogs/{id}/delete(id=${post.id})}" method="post" onsubmit="return confirm('Delete this blog post?')"><button>Delete</button></form></div></td></tr>
+</tbody></table></div></main></div></div></body></html>

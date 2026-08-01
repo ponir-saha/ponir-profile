@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head('Projects')}"></head>
+<body>
+<div class="site-shell">
+    <aside th:replace="~{fragments/public :: sidebar('projects')}"></aside>
+    <div class="page-panel">
+        <header th:replace="~{fragments/public :: topbar('Projects')}"></header>
+        <main class="content-stack">
+            <section class="page-title reveal">
+                <p class="eyebrow">Selected projects</p>
+                <h1>Systems designed for the<br><span>work behind the screen.</span></h1>
+                <p class="lead">A selection of platforms where architecture, workflow design, and product thinking had to work together.</p>
+            </section>
+            <section class="projects-grid reveal">
+                <article class="project-card" th:each="project, stat : ${projects}">
+                    <div class="project-card-top">
+                        <span class="project-number" th:text="${'0' + (stat.index + 1)}">01</span>
+                        <span class="status-badge" th:if="${project.featured}">Featured</span>
+                    </div>
+                    <p class="eyebrow" th:text="${project.eyebrow}">SaaS</p>
+                    <h2 th:text="${project.title}">Project</h2>
+                    <p th:text="${project.summary}">Summary</p>
+                    <div class="tag-row wrap">
+                        <span th:each="tech : ${#strings.arraySplit(project.techStack, ',')}" th:text="${#strings.trim(tech)}">Spring Boot</span>
+                    </div>
+                    <div class="project-links">
+                        <a th:href="@{/projects/{slug}(slug=${project.slug})}">Case study →</a>
+                        <a th:if="${project.githubUrl}" th:href="${project.githubUrl}" target="_blank" rel="noreferrer">GitHub ↗</a>
+                    </div>
+                </article>
+            </section>
+        </main>
+        <footer th:replace="~{fragments/public :: footer}"></footer>
+    </div>
+</div>
+<div class="menu-backdrop" data-menu-close></div>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>

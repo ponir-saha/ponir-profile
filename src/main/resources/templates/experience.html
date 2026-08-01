@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head('Experience')}"></head>
+<body>
+<div class="site-shell">
+    <aside th:replace="~{fragments/public :: sidebar('experience')}"></aside>
+    <div class="page-panel">
+        <header th:replace="~{fragments/public :: topbar('Experience')}"></header>
+        <main class="content-stack">
+            <section class="page-title reveal">
+                <p class="eyebrow">Career journey</p>
+                <h1>Thirteen years of learning,<br><span>leading, and shipping.</span></h1>
+                <p class="lead">From logistics and financial platforms to enterprise AI, each role sharpened how I connect architecture with delivery.</p>
+            </section>
+            <section class="timeline reveal">
+                <article class="timeline-item" th:each="item : ${experiences}">
+                    <div class="timeline-rail"><span th:classappend="${item.currentRole} ? 'current'"></span></div>
+                    <div class="timeline-date">
+                        <strong th:text="${item.startLabel}">Start</strong>
+                        <span>—</span>
+                        <strong th:text="${item.currentRole ? 'Present' : item.endLabel}">End</strong>
+                    </div>
+                    <div class="timeline-card">
+                        <div class="timeline-card-head">
+                            <div><p th:text="${item.company}">Company</p><h2 th:text="${item.title}">Role</h2></div>
+                            <span th:text="${item.location}">Location</span>
+                        </div>
+                        <p th:text="${item.summary}">Summary</p>
+                    </div>
+                </article>
+            </section>
+        </main>
+        <footer th:replace="~{fragments/public :: footer}"></footer>
+    </div>
+</div>
+<div class="menu-backdrop" data-menu-close></div>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>

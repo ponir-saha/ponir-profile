@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin sign in · Ponir Kumer Saha</title>
+    <link rel="stylesheet" th:href="@{/css/site.css}">
+</head>
+<body class="login-page">
+<main class="login-card">
+    <a class="login-brand" th:href="@{/}"><span>PS</span><strong>Portfolio CMS</strong></a>
+    <p class="eyebrow">Admin access</p>
+    <h1>Welcome back.</h1>
+    <p>Sign in to manage portfolio content and writing.</p>
+    <div class="alert error" th:if="${param.error}">The username or password was not accepted.</div>
+    <div class="alert success" th:if="${param.logout}">You have been signed out.</div>
+    <form th:action="@{/login}" method="post">
+        <label><span>Username</span><input type="text" name="username" autocomplete="username" required autofocus></label>
+        <label><span>Password</span><input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="button button-primary full-width" type="submit">Sign in</button>
+    </form>
+    <a class="back-link" th:href="@{/}">← Back to portfolio</a>
+</main>
+</body>
+</html>

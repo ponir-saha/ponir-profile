@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Profile')}"></head>
+<body class="admin-body">
+<div class="admin-shell">
+    <aside th:replace="~{fragments/admin :: sidebar('profile')}"></aside>
+    <div class="admin-main">
+        <header th:replace="~{fragments/admin :: topbar('Profile')}"></header>
+        <main class="admin-content">
+            <div class="admin-page-head"><div><p>Site identity</p><h1>Edit profile content</h1></div></div>
+            <div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
+            <form class="admin-form-card" th:action="@{/admin/profile}" th:object="${profileForm}" method="post">
+                <h2>Identity and positioning</h2>
+                <div class="form-grid two">
+                    <label><span>Full name</span><input th:field="*{fullName}" required><small class="field-error" th:errors="*{fullName}"></small></label>
+                    <label><span>Professional headline</span><input th:field="*{headline}" required><small class="field-error" th:errors="*{headline}"></small></label>
+                </div>
+                <label><span>Hero eyebrow</span><input th:field="*{heroEyebrow}" required><small class="field-error" th:errors="*{heroEyebrow}"></small></label>
+                <label><span>Hero title</span><input th:field="*{heroTitle}" required><small class="field-error" th:errors="*{heroTitle}"></small></label>
+                <label><span>Short introduction</span><textarea th:field="*{introduction}" rows="5" required></textarea><small class="field-error" th:errors="*{introduction}"></small></label>
+                <label><span>Full about copy</span><textarea th:field="*{about}" rows="10" required></textarea><small class="field-error" th:errors="*{about}"></small></label>
+
+                <div class="form-section"><h3>Contact and links</h3><p>Used in the public sidebar, contact page, and calls to action.</p></div>
+                <div class="form-grid two">
+                    <label><span>Email</span><input type="email" th:field="*{email}" required><small class="field-error" th:errors="*{email}"></small></label>
+                    <label><span>Phone / WhatsApp</span><input th:field="*{phone}"></label>
+                    <label><span>Location</span><input th:field="*{location}"></label>
+                    <label><span>Availability message</span><input th:field="*{availability}"></label>
+                    <label><span>LinkedIn URL</span><input type="url" th:field="*{linkedinUrl}"></label>
+                    <label><span>GitHub URL</span><input type="url" th:field="*{githubUrl}"></label>
+                    <label><span>Portrait path / URL</span><input th:field="*{portraitUrl}"></label>
+                    <label><span>Résumé path / URL</span><input th:field="*{resumeUrl}"></label>
+                </div>
+
+                <div class="form-section"><h3>Homepage metrics</h3><p>Use whole numbers; the site adds a plus sign.</p></div>
+                <div class="form-grid three">
+                    <label><span>Years of experience</span><input type="number" min="0" th:field="*{yearsExperience}"></label>
+                    <label><span>Products and platforms</span><input type="number" min="0" th:field="*{projectsDelivered}"></label>
+                    <label><span>Engineers led / mentored</span><input type="number" min="0" th:field="*{engineersMentored}"></label>
+                </div>
+                <div class="form-actions"><button class="button button-primary" type="submit">Save profile</button><a class="button button-ghost" th:href="@{/}" target="_blank">Preview site ↗</a></div>
+            </form>
+        </main>
+    </div>
+</div>
+</body>
+</html>

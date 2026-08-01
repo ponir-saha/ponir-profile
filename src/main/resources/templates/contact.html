@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head('Contact')}"></head>
+<body>
+<div class="site-shell">
+    <aside th:replace="~{fragments/public :: sidebar('contact')}"></aside>
+    <div class="page-panel">
+        <header th:replace="~{fragments/public :: topbar('Contact')}"></header>
+        <main class="content-stack">
+            <section class="contact-layout reveal">
+                <div class="contact-copy">
+                    <p class="eyebrow">Let’s connect</p>
+                    <h1>Bring me the problem<br><span>that needs untangling.</span></h1>
+                    <p class="lead">Whether it is a new platform, a difficult modernization, or an AI capability that must work beyond the demo, I would be glad to hear the context.</p>
+                    <div class="contact-details">
+                        <a th:href="${'mailto:' + profile.email}"><small>Email</small><strong th:text="${profile.email}">email</strong></a>
+                        <a th:if="${profile.phone}" th:href="${'tel:' + profile.phone}"><small>Phone / WhatsApp</small><strong th:text="${profile.phone}">phone</strong></a>
+                        <div><small>Location</small><strong th:text="${profile.location}">Dhaka</strong></div>
+                    </div>
+                </div>
+                <div class="contact-form-card">
+                    <div class="alert success" th:if="${success}" th:text="${success}">Success</div>
+                    <form th:action="@{/contact}" th:object="${contactMessage}" method="post">
+                        <label class="hp-field" aria-hidden="true"><span>Website</span><input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+                        <div class="form-grid two">
+                            <label><span>Name</span><input type="text" th:field="*{name}" placeholder="Your name" required><small class="field-error" th:errors="*{name}"></small></label>
+                            <label><span>Email</span><input type="email" th:field="*{email}" placeholder="you@company.com" required><small class="field-error" th:errors="*{email}"></small></label>
+                        </div>
+                        <label><span>Subject</span><input type="text" th:field="*{subject}" placeholder="What would you like to discuss?" required><small class="field-error" th:errors="*{subject}"></small></label>
+                        <label><span>Message</span><textarea th:field="*{message}" rows="7" placeholder="A little context helps me respond well." required></textarea><small class="field-error" th:errors="*{message}"></small></label>
+                        <button class="button button-primary full-width" type="submit">Send message <span>↗</span></button>
+                    </form>
+                </div>
+            </section>
+        </main>
+        <footer th:replace="~{fragments/public :: footer}"></footer>
+    </div>
+</div>
+<div class="menu-backdrop" data-menu-close></div>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head(${skill.id == null ? 'New skill' : 'Edit skill'})}"></head>
+<body class="admin-body">
+<div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('skills')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Skills')}"></header>
+    <main class="admin-content">
+        <div class="admin-page-head"><div><p>Capabilities</p><h1 th:text="${skill.id == null ? 'Add skill' : 'Edit skill'}">Skill</h1></div></div>
+        <form class="admin-form-card" th:action="@{/admin/skills}" th:object="${skill}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <div class="form-grid two"><label><span>Name</span><input th:field="*{name}" required><small class="field-error" th:errors="*{name}"></small></label><label><span>Category</span><input th:field="*{category}" required><small class="field-error" th:errors="*{category}"></small></label></div>
+            <div class="form-grid two"><label><span>Proficiency (1-100)</span><input type="number" min="1" max="100" th:field="*{proficiency}" required><small class="field-error" th:errors="*{proficiency}"></small></label><label><span>Sort order</span><input type="number" th:field="*{sortOrder}"></label></div>
+            <div class="check-row"><label><input type="checkbox" th:field="*{featured}"><span>Feature on homepage</span></label></div>
+            <div class="form-actions"><button class="button button-primary" type="submit">Save skill</button><a class="button button-ghost" th:href="@{/admin/skills}">Cancel</a></div>
+        </form>
+    </main>
+</div></div>
+</body>
+</html>

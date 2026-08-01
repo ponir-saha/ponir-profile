@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head(${experience.id == null ? 'New role' : 'Edit role'})}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('experience')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Experience')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Career timeline</p><h1 th:text="${experience.id == null ? 'Add role' : 'Edit role'}">Role</h1></div></div>
+<form class="admin-form-card" th:action="@{/admin/experience}" th:object="${experience}" method="post"><input type="hidden" th:field="*{id}">
+<div class="form-grid two"><label><span>Company</span><input th:field="*{company}" required><small class="field-error" th:errors="*{company}"></small></label><label><span>Role title</span><input th:field="*{title}" required><small class="field-error" th:errors="*{title}"></small></label></div>
+<div class="form-grid three"><label><span>Location</span><input th:field="*{location}"></label><label><span>Start label</span><input th:field="*{startLabel}" placeholder="Apr 2026" required></label><label><span>End label</span><input th:field="*{endLabel}" placeholder="Present"></label></div>
+<label><span>Role summary</span><textarea th:field="*{summary}" rows="7" required></textarea><small class="field-error" th:errors="*{summary}"></small></label>
+<div class="form-grid two"><label><span>Sort order</span><input type="number" th:field="*{sortOrder}"></label></div><div class="check-row"><label><input type="checkbox" th:field="*{currentRole}"><span>This is the current role</span></label></div>
+<div class="form-actions"><button class="button button-primary">Save role</button><a class="button button-ghost" th:href="@{/admin/experience}">Cancel</a></div></form>
+</main></div></div></body></html>

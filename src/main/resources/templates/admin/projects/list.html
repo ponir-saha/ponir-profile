@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Projects')}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('projects')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Projects')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Work showcase</p><h1>Projects</h1></div><a class="button button-primary" th:href="@{/admin/projects/new}">Add project</a></div><div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
+<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Project</th><th>Visibility</th><th>Featured</th><th>Order</th><th></th></tr></thead><tbody>
+<tr th:each="project : ${projects}"><td><strong th:text="${project.title}">Project</strong><small th:text="${project.slug}">slug</small></td><td th:text="${project.published ? 'Published' : 'Hidden'}">Published</td><td th:text="${project.featured ? 'Yes' : 'No'}">Yes</td><td th:text="${project.sortOrder}">1</td><td><div class="row-actions"><a th:href="@{/projects/{slug}(slug=${project.slug})}" target="_blank">View</a><a th:href="@{/admin/projects/{id}/edit(id=${project.id})}">Edit</a><form th:action="@{/admin/projects/{id}/delete(id=${project.id})}" method="post" onsubmit="return confirm('Delete this project?')"><button>Delete</button></form></div></td></tr>
+</tbody></table></div></main></div></div></body></html>

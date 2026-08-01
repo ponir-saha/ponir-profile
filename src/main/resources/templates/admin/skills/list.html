@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Skills')}"></head>
+<body class="admin-body">
+<div class="admin-shell">
+    <aside th:replace="~{fragments/admin :: sidebar('skills')}"></aside>
+    <div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Skills')}"></header>
+        <main class="admin-content">
+            <div class="admin-page-head"><div><p>Capabilities</p><h1>Skills</h1></div><a class="button button-primary" th:href="@{/admin/skills/new}">Add skill</a></div>
+            <div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
+            <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Skill</th><th>Category</th><th>Proficiency</th><th>Featured</th><th></th></tr></thead><tbody>
+                <tr th:each="skill : ${skills}"><td><strong th:text="${skill.name}">Skill</strong></td><td th:text="${skill.category}">Category</td><td th:text="${skill.proficiency + '%'}">90%</td><td th:text="${skill.featured ? 'Yes' : 'No'}">Yes</td><td><div class="row-actions"><a th:href="@{/admin/skills/{id}/edit(id=${skill.id})}">Edit</a><form th:action="@{/admin/skills/{id}/delete(id=${skill.id})}" method="post" onsubmit="return confirm('Delete this skill?')"><button type="submit">Delete</button></form></div></td></tr>
+            </tbody></table></div>
+        </main>
+    </div>
+</div>
+</body>
+</html>

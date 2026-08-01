@@ -1,0 +1,9 @@
+target/
+.idea/
+*.iml
+.env
+.DS_Store
+tmp/
+uploads/
+data/
+.run/

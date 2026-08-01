@@ -1,0 +1,11 @@
+# Disposable local preview profile. Production/default remains PostgreSQL + Flyway.
+spring:
+  datasource:
+    url: jdbc:h2:mem:portfolio-preview;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true

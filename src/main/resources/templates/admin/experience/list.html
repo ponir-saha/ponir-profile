@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Experience')}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('experience')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Experience')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Career timeline</p><h1>Experience</h1></div><a class="button button-primary" th:href="@{/admin/experience/new}">Add role</a></div><div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
+<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Role</th><th>Company</th><th>Period</th><th>Order</th><th></th></tr></thead><tbody>
+<tr th:each="item : ${experiences}"><td><strong th:text="${item.title}">Role</strong><small th:text="${item.location}">Location</small></td><td th:text="${item.company}">Company</td><td th:text="${item.startLabel + ' — ' + (item.currentRole ? 'Present' : item.endLabel)}">Period</td><td th:text="${item.sortOrder}">1</td><td><div class="row-actions"><a th:href="@{/admin/experience/{id}/edit(id=${item.id})}">Edit</a><form th:action="@{/admin/experience/{id}/delete(id=${item.id})}" method="post" onsubmit="return confirm('Delete this role?')"><button>Delete</button></form></div></td></tr>
+</tbody></table></div></main></div></div></body></html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head(${post.id == null ? 'New post' : 'Edit post'})}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('blogs')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Blog posts')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Writing</p><h1 th:text="${post.id == null ? 'Create blog post' : 'Edit blog post'}">Post</h1></div></div>
+<form class="admin-form-card" th:action="@{/admin/blogs}" th:object="${post}" method="post"><input type="hidden" th:field="*{id}">
+<label><span>Title</span><input th:field="*{title}" data-slug-source required><small class="field-error" th:errors="*{title}"></small></label><div class="form-grid two"><label><span>URL slug</span><input th:field="*{slug}" data-slug-target><small class="field-error" th:errors="*{slug}"></small></label><label><span>Category</span><input th:field="*{category}" placeholder="Architecture" required><small class="field-error" th:errors="*{category}"></small></label></div>
+<label><span>Excerpt</span><textarea th:field="*{excerpt}" rows="4" required></textarea><small class="field-error" th:errors="*{excerpt}"></small></label><label><span>Article content</span><textarea th:field="*{content}" rows="18" placeholder="Use blank lines to separate paragraphs." required></textarea><small class="field-error" th:errors="*{content}"></small></label><label><span>Featured image URL (optional)</span><input th:field="*{featuredImageUrl}"></label>
+<div class="form-grid two"><label><span>Publication status</span><select th:field="*{status}"><option th:each="status : ${statuses}" th:value="${status}" th:text="${status}">DRAFT</option></select></label></div><div class="check-row"><label><input type="checkbox" th:field="*{featured}"><span>Feature this post</span></label></div>
+<div class="form-actions"><button class="button button-primary">Save blog post</button><a class="button button-ghost" th:href="@{/admin/blogs}">Cancel</a></div></form>
+</main></div></div><script th:src="@{/js/admin.js}"></script></body></html>

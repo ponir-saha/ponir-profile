@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head('Page not found')}"></head>
+<body>
+<main class="standalone-error">
+    <span th:text="${status ?: '404'}">404</span>
+    <h1>That page is not in the architecture.</h1>
+    <p>The address may have changed, or the content is no longer available.</p>
+    <a class="button button-primary" th:href="@{/}">Return home</a>
+</main>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>

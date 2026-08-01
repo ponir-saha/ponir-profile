@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head(${project.title})}"></head>
+<body>
+<div class="site-shell">
+    <aside th:replace="~{fragments/public :: sidebar('projects')}"></aside>
+    <div class="page-panel">
+        <header th:replace="~{fragments/public :: topbar('Project case study')}"></header>
+        <main class="content-stack">
+            <article class="detail-card reveal">
+                <a class="back-link" th:href="@{/projects}">← All projects</a>
+                <p class="eyebrow" th:text="${project.eyebrow}">Case study</p>
+                <h1 th:text="${project.title}">Project</h1>
+                <p class="lead" th:text="${project.summary}">Summary</p>
+                <div class="detail-divider"></div>
+                <div class="detail-layout">
+                    <div class="prose preserve-lines" th:text="${project.description}">Description</div>
+                    <aside>
+                        <p class="eyebrow">Technology</p>
+                        <div class="tag-row wrap">
+                            <span th:each="tech : ${#strings.arraySplit(project.techStack, ',')}" th:text="${#strings.trim(tech)}">Java</span>
+                        </div>
+                        <div class="detail-links">
+                            <a th:if="${project.githubUrl}" class="button button-primary full-width" th:href="${project.githubUrl}" target="_blank" rel="noreferrer">View source ↗</a>
+                            <a th:if="${project.liveUrl}" class="button button-ghost full-width" th:href="${project.liveUrl}" target="_blank" rel="noreferrer">Open live site ↗</a>
+                        </div>
+                    </aside>
+                </div>
+            </article>
+        </main>
+        <footer th:replace="~{fragments/public :: footer}"></footer>
+    </div>
+</div>
+<div class="menu-backdrop" data-menu-close></div>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin :: head('Messages')}"></head>
+<body class="admin-body"><div class="admin-shell"><aside th:replace="~{fragments/admin :: sidebar('messages')}"></aside><div class="admin-main"><header th:replace="~{fragments/admin :: topbar('Messages')}"></header>
+<main class="admin-content"><div class="admin-page-head"><div><p>Contact inbox</p><h1>Messages</h1></div></div><div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
+<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Sender</th><th>Subject</th><th>Received</th><th>Status</th><th></th></tr></thead><tbody>
+<tr th:each="message : ${messages}"><td><strong th:text="${message.name}">Name</strong><small th:text="${message.email}">Email</small></td><td th:text="${message.subject}">Subject</td><td th:text="${#temporals.format(message.createdAt, 'MMM dd, yyyy HH:mm')}">Date</td><td th:text="${message.read ? 'Read' : 'New'}">New</td><td><div class="row-actions"><a th:href="@{/admin/messages/{id}(id=${message.id})}">Open</a><form th:action="@{/admin/messages/{id}/delete(id=${message.id})}" method="post" onsubmit="return confirm('Delete this message?')"><button>Delete</button></form></div></td></tr>
+<tr th:if="${messages.isEmpty()}"><td colspan="5">No messages yet.</td></tr>
+</tbody></table></div></main></div></div></body></html>

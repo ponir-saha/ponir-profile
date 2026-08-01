@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/public :: head('Writing')}"></head>
+<body>
+<div class="site-shell">
+    <aside th:replace="~{fragments/public :: sidebar('blog')}"></aside>
+    <div class="page-panel">
+        <header th:replace="~{fragments/public :: topbar('Writing')}"></header>
+        <main class="content-stack">
+            <section class="page-title blog-heading reveal">
+                <div><p class="eyebrow">Engineering notes</p><h1>Ideas made useful<br><span>through practice.</span></h1></div>
+                <form class="search-form" th:action="@{/blog}" method="get">
+                    <label for="query">Search the writing</label>
+                    <div><input id="query" name="query" type="search" th:value="${query}" placeholder="Architecture, RAG, Kafka…"><button type="submit">Search</button></div>
+                </form>
+            </section>
+            <p class="search-summary" th:if="${!query.isBlank()}" th:text="${posts.size() + ' result(s) for “' + query + '”'}">Results</p>
+            <section class="blog-grid reveal" th:if="${!posts.isEmpty()}">
+                <article class="blog-card" th:each="post : ${posts}">
+                    <img class="blog-card-image" th:if="${post.featuredImageUrl != null and !post.featuredImageUrl.isBlank()}" th:src="${post.featuredImageUrl}" th:alt="${post.title}">
+                    <div class="blog-meta"><span th:text="${post.category}">Category</span><time th:text="${#temporals.format(post.publishedAt, 'MMM dd, yyyy')}">Date</time></div>
+                    <h2><a th:href="@{/blog/{slug}(slug=${post.slug})}" th:text="${post.title}">Title</a></h2>
+                    <p th:text="${post.excerpt}">Excerpt</p>
+                    <a class="text-link" th:href="@{/blog/{slug}(slug=${post.slug})}">Read article →</a>
+                </article>
+            </section>
+            <section class="empty-state" th:if="${posts.isEmpty()}">
+                <span>⌕</span><h2>No articles found</h2><p>Try a broader term, or browse all of the writing.</p><a class="button button-primary" th:href="@{/blog}">Clear search</a>
+            </section>
+        </main>
+        <footer th:replace="~{fragments/public :: footer}"></footer>
+    </div>
+</div>
+<div class="menu-backdrop" data-menu-close></div>
+<script th:src="@{/js/site.js}"></script>
+</body>
+</html>
