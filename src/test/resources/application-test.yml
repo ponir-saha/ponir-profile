@@ -15,3 +15,5 @@ portfolio:
   admin:
     username: admin
     password: test-password
+  storage:
+    upload-directory: target/test-uploads

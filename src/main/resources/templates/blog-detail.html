@@ -11,11 +11,11 @@
                 <a class="back-link" th:href="@{/blog}">← All writing</a>
                 <header>
                     <div class="blog-meta"><span th:text="${post.category}">Category</span><time th:text="${#temporals.format(post.publishedAt, 'MMMM dd, yyyy')}">Date</time></div>
-                    <h1 th:text="${post.title}">Article title</h1>
+                    <h1 class="article-title" th:text="${post.title}">Article title</h1>
                     <p class="lead" th:text="${post.excerpt}">Excerpt</p>
                 </header>
                 <img class="article-featured-image" th:if="${post.featuredImageUrl != null and !post.featuredImageUrl.isBlank()}" th:src="${post.featuredImageUrl}" th:alt="${post.title}">
-                <div class="article-content preserve-lines" th:text="${post.content}">Content</div>
+                <div class="article-content" th:utext="${articleHtml}">Content</div>
                 <footer class="article-author">
                     <img th:src="${profile.portraitUrl}" th:alt="${profile.fullName}">
                     <div><small>Written by</small><strong th:text="${profile.fullName}">Ponir Kumer Saha</strong><span th:text="${profile.headline}">Principal Engineer</span></div>

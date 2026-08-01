@@ -1,27 +1,23 @@
 package com.ponir.portfolio.config;
 
 import com.ponir.portfolio.domain.SiteProfile;
-import com.ponir.portfolio.repository.ContactMessageRepository;
-import com.ponir.portfolio.repository.SiteProfileRepository;
+import com.ponir.portfolio.service.ContactMessageService;
+import com.ponir.portfolio.service.ProfileService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.time.Year;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalModelAttributes {
-    private final SiteProfileRepository profileRepository;
-    private final ContactMessageRepository messageRepository;
-
-    public GlobalModelAttributes(SiteProfileRepository profileRepository,
-                                 ContactMessageRepository messageRepository) {
-        this.profileRepository = profileRepository;
-        this.messageRepository = messageRepository;
-    }
+    private final ProfileService profileService;
+    private final ContactMessageService contactMessageService;
 
     @ModelAttribute("profile")
     public SiteProfile profile() {
-        return profileRepository.findById(1L).orElseGet(SiteProfile::new);
+        return profileService.getProfile();
     }
 
     @ModelAttribute("currentYear")
@@ -31,6 +27,6 @@ public class GlobalModelAttributes {
 
     @ModelAttribute("unreadMessageCount")
     public long unreadMessageCount() {
-        return messageRepository.countByReadFalse();
+        return contactMessageService.countUnread();
     }
 }

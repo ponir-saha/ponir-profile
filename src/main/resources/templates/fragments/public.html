@@ -52,7 +52,12 @@
         <p class="availability"><span></span><span th:text="${profile.availability}">Available</span></p>
         <div class="socials">
             <a th:if="${profile.linkedinUrl}" th:href="${profile.linkedinUrl}" target="_blank" rel="noreferrer" aria-label="LinkedIn">in</a>
-            <a th:if="${profile.githubUrl}" th:href="${profile.githubUrl}" target="_blank" rel="noreferrer" aria-label="GitHub">gh</a>
+            <a class="social-github" th:if="${profile.githubUrl}" th:href="${profile.githubUrl}" target="_blank" rel="noreferrer" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.3 4 5 5 0 0 0 19.1.5S18 0 15 1.8a13.4 13.4 0 0 0-6 0C6 0 4.9.5 4.9.5A5 5 0 0 0 4.7 4a5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 9 18v4M9 18c-4.5 2-5-2-7-2"/></svg>
+            </a>
+            <a th:if="${profile.whatsappUrl != null and !profile.whatsappUrl.isBlank()}" th:href="${profile.whatsappUrl}" target="_blank" rel="noreferrer" aria-label="WhatsApp">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.5 8.8 8.8 0 0 1-3.8-.9L3 21l1.7-5a8.5 8.5 0 1 1 16.3-4.5Z"/><path d="M8.5 8.4c.2-.5.4-.5.8-.5h.5c.2 0 .4.1.5.4l.8 1.8c.1.3.1.5-.1.7l-.6.8c-.2.2-.1.5.1.7.7 1.2 1.7 2.1 2.9 2.7.3.1.5.1.7-.1l.9-1.1c.2-.2.4-.3.7-.1l1.8.8c.3.1.4.3.4.5 0 .4-.2 1.5-.8 2-.6.5-1.4.8-2.3.6-1.3-.2-3.5-1.1-5.3-2.8-1.4-1.3-2.5-3.1-2.8-4.4-.2-.9 0-1.6.4-2Z"/></svg>
+            </a>
             <a th:href="${'mailto:' + profile.email}" aria-label="Email">@</a>
         </div>
     </div>

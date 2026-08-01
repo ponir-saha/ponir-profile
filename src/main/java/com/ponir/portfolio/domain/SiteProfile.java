@@ -44,6 +44,8 @@ public class SiteProfile {
     @Size(max = 500)
     private String githubUrl;
     @Size(max = 500)
+    private String whatsappUrl;
+    @Size(max = 500)
     private String portraitUrl;
     @Size(max = 500)
     private String resumeUrl;
@@ -87,6 +89,8 @@ public class SiteProfile {
     public void setLinkedinUrl(String linkedinUrl) { this.linkedinUrl = linkedinUrl; }
     public String getGithubUrl() { return githubUrl; }
     public void setGithubUrl(String githubUrl) { this.githubUrl = githubUrl; }
+    public String getWhatsappUrl() { return whatsappUrl; }
+    public void setWhatsappUrl(String whatsappUrl) { this.whatsappUrl = whatsappUrl; }
     public String getPortraitUrl() { return portraitUrl; }
     public void setPortraitUrl(String portraitUrl) { this.portraitUrl = portraitUrl; }
     public String getResumeUrl() { return resumeUrl; }

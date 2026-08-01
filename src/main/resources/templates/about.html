@@ -34,13 +34,36 @@
             </section>
 
             <section class="section-heading reveal">
-                <div><p class="eyebrow">Capabilities</p><h2>The toolkit behind the outcomes.</h2></div>
+                <div><p class="eyebrow">Engineering practice</p><h2>The toolkit behind the outcomes.</h2><p class="section-intro">Six connected capability groups, organized around how dependable systems are designed, delivered, operated, and evolved.</p></div>
             </section>
-            <section class="skill-cloud reveal">
-                <article th:each="skill : ${skills}" class="skill-pill-card">
-                    <div><small th:text="${skill.category}">Category</small><strong th:text="${skill.name}">Skill</strong></div>
-                    <span th:text="${skill.proficiency + '%'}">95%</span>
-                    <div class="skill-meter"><i th:style="${'width:' + skill.proficiency + '%'}"></i></div>
+            <section class="practice-map reveal" aria-label="Engineering practice structure">
+                <article><span>01</span><div><small>Design</small><strong>Define the system</strong><p>Boundaries, trade-offs, events, and reliability patterns.</p></div></article>
+                <article><span>02</span><div><small>Deliver</small><strong>Build the product</strong><p>Backend services, data foundations, and applied AI.</p></div></article>
+                <article><span>03</span><div><small>Scale</small><strong>Operate and lead</strong><p>Cloud delivery, observability, technical direction, and teams.</p></div></article>
+            </section>
+            <section class="skill-groups reveal">
+                <article th:each="group, groupStat : ${skillsByCategory}" class="skill-group">
+                    <header class="skill-group-head">
+                        <span class="skill-group-mark" th:text="${#numbers.formatInteger(groupStat.count, 2)}">01</span>
+                        <div>
+                            <h3 th:text="${group.key}">Architecture</h3>
+                            <small th:switch="${group.key}">
+                                <span th:case="'Architecture'">System design &amp; boundaries</span>
+                                <span th:case="'Backend'">Services &amp; integration</span>
+                                <span th:case="'Data'">Persistence &amp; discovery</span>
+                                <span th:case="'AI &amp; LLM'">Intelligent product systems</span>
+                                <span th:case="'Cloud &amp; DevOps'">Delivery &amp; operations</span>
+                                <span th:case="'Leadership'">Direction &amp; team leverage</span>
+                                <span th:case="*" th:text="${#lists.size(group.value) + ' capabilities'}">Capabilities</span>
+                            </small>
+                        </div>
+                    </header>
+                    <div class="skill-group-list">
+                        <div th:each="skill : ${group.value}" class="skill-row">
+                            <div><strong th:text="${skill.name}">Skill</strong><span th:text="${skill.proficiency + '%'}">95%</span></div>
+                            <div class="skill-meter"><i th:style="${'width:' + skill.proficiency + '%'}"></i></div>
+                        </div>
+                    </div>
                 </article>
             </section>
         </main>

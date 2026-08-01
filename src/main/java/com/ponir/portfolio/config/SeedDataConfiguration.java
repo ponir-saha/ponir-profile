@@ -53,6 +53,7 @@ public class SeedDataConfiguration {
         p.setLocation("Dhaka, Bangladesh · Working remotely");
         p.setLinkedinUrl("https://linkedin.com/in/ponirsaha");
         p.setGithubUrl("https://github.com/ponir-saha");
+        p.setWhatsappUrl("https://wa.me/8801713177318");
         p.setPortraitUrl("/images/ponir-saha-portrait.png");
         p.setResumeUrl("/files/ponir-kumer-saha-resume.pdf");
         p.setAvailability("Open to remote architecture, principal engineering, and AI platform opportunities.");
@@ -96,31 +97,54 @@ public class SeedDataConfiguration {
     private void seedExperience(ExperienceRepository repository) {
         if (repository.count() > 0) return;
         repository.saveAll(List.of(
-                experience("Allianz Technology", "Senior Full Stack Developer", "Remote", "Apr 2026", "Present", true,
-                        "Designed an AI-assisted insurance case-management modernization on Spring Boot microservices. Integrated RAG, OpenSearch, vector embeddings, OpenAI/Gemini, and document intelligence to improve contextual search and knowledge access.", 1),
-                experience("BJIT Limited", "Principal Software Engineer / Architect", "Dhaka, Bangladesh", "Feb 2022", "Mar 2026", false,
-                        "Architected microservices platforms with Spring Cloud, reducing API latency by 40%. Designed high-volume event-driven systems with Kafka, Redis, and WebSocket, and led a cross-functional team of 10+ engineers across architecture, governance, delivery, and mentoring.", 2),
-                experience("Dnet - A Social Enterprise", "Lead Java Developer", "Dhaka, Bangladesh", "Nov 2020", "Feb 2022", false,
-                        "Led Kafka-based event-driven architecture, cloud migration, and technical roadmaps. Improved reliability to 99.9% uptime while aligning engineering delivery with organisational goals.", 3),
-                experience("DataSoft Systems Bangladesh", "Software Engineer", "Dhaka, Bangladesh", "Nov 2019", "Oct 2020", false,
-                        "Developed cloud-native backend APIs with Java, Spring Boot, and Node.js. Standardised testing practices and raised code coverage to 80%.", 4),
-                experience("Ayudhya Capital Services", "Senior Software Developer", "Bangkok, Thailand", "Aug 2017", "May 2019", false,
-                        "Designed secure financial systems, improved transaction reliability, reduced downtime by 20%, and improved database-query performance by 35%.", 5),
-                experience("Wallenius Wilhelmsen Logistics", "Transform Developer", "Bangkok, Thailand", "Feb 2012", "Jul 2017", false,
-                        "Automated logistics data transformations with 99.9% accuracy and built custom PDF-generation tools that significantly reduced manual financial-document processing.", 6)
+                experience("Allianz Technology", "Senior Full Stack Developer", "/images/companies/allianz.svg", "Remote", "Apr 2026", "Present", true,
+                        "Designed an AI-assisted insurance case-management modernization on Spring Boot microservices. Integrated RAG, OpenSearch, vector embeddings, OpenAI/Gemini, and document intelligence to improve contextual search and knowledge access.",
+                        "AI-assisted insurance case-management platform\nEnterprise knowledge retrieval and document intelligence",
+                        "Java, Spring Boot, Spring AI, RAG, OpenSearch, OpenAI, Gemini",
+                        "Modernized contextual search across insurance workflows\nDesigned traceable AI-assisted knowledge access", 1),
+                experience("BJIT Limited", "Principal Software Engineer / Architect", "/images/companies/bjit.svg", "Dhaka, Bangladesh", "Feb 2022", "Mar 2026", false,
+                        "Architected microservices platforms with Spring Cloud, reducing API latency by 40%. Designed high-volume event-driven systems with Kafka, Redis, and WebSocket, and led a cross-functional team of 10+ engineers across architecture, governance, delivery, and mentoring.",
+                        "Cloud-native microservices platform\nHigh-volume real-time event platform",
+                        "Java, Spring Boot, Spring Cloud, Kafka, Redis, WebSocket, Kubernetes",
+                        "Reduced API latency by 40%\nLed and mentored a cross-functional team of 10+ engineers", 2),
+                experience("Dnet - A Social Enterprise", "Lead Java Developer", "/images/companies/dnet.svg", "Dhaka, Bangladesh", "Nov 2020", "Feb 2022", false,
+                        "Led Kafka-based event-driven architecture, cloud migration, and technical roadmaps. Improved reliability to 99.9% uptime while aligning engineering delivery with organisational goals.",
+                        "Kafka-based event platform\nCloud migration and technical roadmap",
+                        "Java, Spring Boot, Kafka, Cloud Architecture, Observability",
+                        "Improved platform reliability to 99.9% uptime\nAligned architecture decisions with delivery goals", 3),
+                experience("DataSoft Systems Bangladesh", "Software Engineer", "/images/companies/datasoft.svg", "Dhaka, Bangladesh", "Nov 2019", "Oct 2020", false,
+                        "Developed cloud-native backend APIs with Java, Spring Boot, and Node.js. Standardised testing practices and raised code coverage to 80%.",
+                        "Cloud-native backend API platform\nAutomated engineering quality initiative",
+                        "Java, Spring Boot, Node.js, REST APIs, Automated Testing",
+                        "Raised automated test coverage to 80%\nStandardized testing practices across delivery", 4),
+                experience("Ayudhya Capital Services", "Senior Software Developer", "/images/companies/krungsri.svg", "Bangkok, Thailand", "Aug 2017", "May 2019", false,
+                        "Designed secure financial systems, improved transaction reliability, reduced downtime by 20%, and improved database-query performance by 35%.",
+                        "Secure financial transaction services\nDatabase performance modernization",
+                        "Java, Spring, Oracle, Secure Transactions, Performance Tuning",
+                        "Reduced production downtime by 20%\nImproved database-query performance by 35%", 5),
+                experience("Wallenius Wilhelmsen Logistics", "Transform Developer", "/images/companies/wallenius-wilhelmsen.svg", "Bangkok, Thailand", "Feb 2012", "Jul 2017", false,
+                        "Automated logistics data transformations with 99.9% accuracy and built custom PDF-generation tools that significantly reduced manual financial-document processing.",
+                        "Global logistics data transformations\nFinancial-document PDF automation",
+                        "Java, Data Transformation, XML, PDF Generation, Logistics Systems",
+                        "Delivered logistics transformations with 99.9% accuracy\nReduced manual financial-document processing", 6)
         ));
     }
 
-    private Experience experience(String company, String title, String location, String start, String end,
-                                  boolean current, String summary, int order) {
+    private Experience experience(String company, String title, String logoUrl, String location, String start, String end,
+                                  boolean current, String summary, String projectHighlights, String skills,
+                                  String achievements, int order) {
         Experience item = new Experience();
         item.setCompany(company);
         item.setTitle(title);
+        item.setLogoUrl(logoUrl);
         item.setLocation(location);
         item.setStartLabel(start);
         item.setEndLabel(end);
         item.setCurrentRole(current);
         item.setSummary(summary);
+        item.setProjectHighlights(projectHighlights);
+        item.setSkills(skills);
+        item.setAchievements(achievements);
         item.setSortOrder(order);
         return item;
     }
@@ -163,15 +187,80 @@ public class SeedDataConfiguration {
         repository.saveAll(List.of(
                 post("Designing RAG Systems That Earn Trust", "designing-rag-systems-that-earn-trust", "AI Engineering",
                         "A practical architecture checklist for retrieval quality, citations, evaluation, observability, and safe enterprise adoption.",
-                        "A useful RAG system is more than an embedding model attached to a chat box. It is a retrieval product whose answers must be traceable, measurable, and safe.\n\nStart with the knowledge lifecycle: what enters the corpus, who approved it, when it expires, and which audience may retrieve it. Chunking and metadata should reflect the source structure rather than arbitrary token windows.\n\nEvaluation belongs in the delivery pipeline. Maintain representative questions, expected evidence, and failure cases. Measure retrieval before generation, then trace the full path from user question to retrieved passages and final answer.\n\nThe goal is not a demo that sounds intelligent. The goal is a dependable capability that helps people make better decisions while making uncertainty visible.",
+                        """
+                        ## The architecture goal
+
+                        A useful RAG system is more than an embedding model attached to a chat box. It is a retrieval product whose answers must be traceable, measurable, and safe.
+
+                        ## Delivery plan
+
+                        - Govern the knowledge lifecycle and access rules.
+                        - Model chunks and metadata around the source structure.
+                        - Measure retrieval quality before judging generation.
+                        - Trace every answer back to evidence.
+
+                        ## A boundary that keeps retrieval testable
+
+                        ```java
+                        public interface KnowledgeRetriever {
+                            List<Evidence> retrieve(String question, AccessScope scope);
+                        }
+                        ```
+
+                        Evaluation belongs in the delivery pipeline. The goal is a dependable capability that helps people make better decisions while making uncertainty visible.
+                        """.strip(),
                         true, now.minus(2, ChronoUnit.DAYS)),
                 post("The Architecture Review I Wish Every Team Had", "architecture-review-every-team-needs", "Engineering Leadership",
                         "A lightweight review method that improves important decisions without slowing a delivery team to a halt.",
-                        "Architecture review works best as a decision-support practice, not a gatekeeping ceremony. A good review makes context, constraints, trade-offs, and reversibility visible.\n\nBegin with the business outcome and the failure modes that matter. Then discuss data ownership, interfaces, security, operability, cost, and the team that will maintain the system. Capture the decision and its assumptions in a short record.\n\nThe best review leaves the implementation team with greater clarity and ownership. It should reduce hidden risk while preserving momentum.",
+                        """
+                        ## Start with the decision
+
+                        Architecture review works best as decision support, not a gatekeeping ceremony. A useful review makes context, constraints, trade-offs, and reversibility visible.
+
+                        ## Review plan
+
+                        - State the business outcome and material failure modes.
+                        - Make data ownership, interfaces, security, cost, and operations explicit.
+                        - Record the decision, its assumptions, and the date to revisit it.
+
+                        ## A compact decision record
+
+                        ```text
+                        Decision: Publish domain events through a transactional outbox
+                        Because: Business state and event intent must commit atomically
+                        Revisit: When throughput or ordering requirements materially change
+                        ```
+
+                        The best review leaves the implementation team with greater clarity and ownership. It reduces hidden risk while preserving momentum.
+                        """.strip(),
                         true, now.minus(9, ChronoUnit.DAYS)),
                 post("Outbox and CDC: A Practical Reliability Pair", "outbox-and-cdc-reliability-pair", "Distributed Systems",
                         "How transactional outbox and change-data capture work together to make event publication reliable and observable.",
-                        "Distributed transactions between a database and a broker are a common source of subtle failure. The transactional outbox pattern keeps the domain change and event record in one local transaction.\n\nA CDC connector such as Debezium then streams committed outbox records to Kafka. This separates business correctness from broker availability while preserving a durable publication trail.\n\nYou still need idempotent consumers, schema evolution, monitoring for connector lag, and a clear retention policy. Patterns remove categories of failure; they do not remove operational responsibility.",
+                        """
+                        ## The reliability problem
+
+                        Distributed transactions between a database and a broker are a common source of subtle failure. The transactional outbox pattern keeps the domain change and event record in one local transaction.
+
+                        ## Implementation plan
+
+                        - Write business state and the outbox record in one transaction.
+                        - Stream committed records through CDC.
+                        - Make consumers idempotent and monitor connector lag.
+                        - Define schema evolution and retention policies.
+
+                        ## Transaction boundary
+
+                        ```java
+                        @Transactional
+                        public Order place(OrderCommand command) {
+                            Order order = orders.save(Order.from(command));
+                            outbox.save(OrderPlaced.from(order));
+                            return order;
+                        }
+                        ```
+
+                        A CDC connector such as Debezium can stream committed outbox records to Kafka. Patterns remove categories of failure; they do not remove operational responsibility.
+                        """.strip(),
                         false, now.minus(18, ChronoUnit.DAYS))
         ));
     }

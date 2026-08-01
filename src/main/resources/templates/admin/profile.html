@@ -9,7 +9,8 @@
         <main class="admin-content">
             <div class="admin-page-head"><div><p>Site identity</p><h1>Edit profile content</h1></div></div>
             <div class="alert success" th:if="${success}" th:text="${success}">Saved</div>
-            <form class="admin-form-card" th:action="@{/admin/profile}" th:object="${profileForm}" method="post">
+            <form class="admin-form-card" th:action="@{/admin/profile}" th:object="${profileForm}" method="post" enctype="multipart/form-data">
+                <div class="alert error" th:each="error : ${#fields.globalErrors()}" th:text="${error}">Upload error</div>
                 <h2>Identity and positioning</h2>
                 <div class="form-grid two">
                     <label><span>Full name</span><input th:field="*{fullName}" required><small class="field-error" th:errors="*{fullName}"></small></label>
@@ -20,6 +21,15 @@
                 <label><span>Short introduction</span><textarea th:field="*{introduction}" rows="5" required></textarea><small class="field-error" th:errors="*{introduction}"></small></label>
                 <label><span>Full about copy</span><textarea th:field="*{about}" rows="10" required></textarea><small class="field-error" th:errors="*{about}"></small></label>
 
+                <div class="form-section"><h3>Profile image</h3><p>Upload a new portrait or keep using an image path/URL.</p></div>
+                <div class="admin-image-row">
+                    <img class="admin-image-preview portrait-preview" th:if="*{portraitUrl != null and !portraitUrl.isBlank()}" th:src="*{portraitUrl}" alt="Current portrait">
+                    <div class="admin-image-fields">
+                        <label><span>Upload portrait</span><input type="file" name="portraitImage" accept="image/jpeg,image/png,image/webp,image/gif,image/avif"><small class="field-help">JPG, PNG, WebP, GIF, or AVIF. Maximum 10 MB.</small></label>
+                        <label><span>Portrait path / URL</span><input th:field="*{portraitUrl}" placeholder="/images/portrait.png"></label>
+                    </div>
+                </div>
+
                 <div class="form-section"><h3>Contact and links</h3><p>Used in the public sidebar, contact page, and calls to action.</p></div>
                 <div class="form-grid two">
                     <label><span>Email</span><input type="email" th:field="*{email}" required><small class="field-error" th:errors="*{email}"></small></label>
@@ -28,7 +38,7 @@
                     <label><span>Availability message</span><input th:field="*{availability}"></label>
                     <label><span>LinkedIn URL</span><input type="url" th:field="*{linkedinUrl}"></label>
                     <label><span>GitHub URL</span><input type="url" th:field="*{githubUrl}"></label>
-                    <label><span>Portrait path / URL</span><input th:field="*{portraitUrl}"></label>
+                    <label><span>WhatsApp URL</span><input type="url" th:field="*{whatsappUrl}" placeholder="https://wa.me/8801713177318"><small class="field-help">Leave blank to hide the WhatsApp icon.</small></label>
                     <label><span>Résumé path / URL</span><input th:field="*{resumeUrl}"></label>
                 </div>
 

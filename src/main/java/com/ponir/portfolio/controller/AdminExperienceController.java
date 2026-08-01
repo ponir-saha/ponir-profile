@@ -1,8 +1,9 @@
 package com.ponir.portfolio.controller;
 
 import com.ponir.portfolio.domain.Experience;
-import com.ponir.portfolio.repository.ExperienceRepository;
+import com.ponir.portfolio.service.ExperienceService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/experience")
+@RequiredArgsConstructor
 public class AdminExperienceController {
-    private final ExperienceRepository experiences;
-
-    public AdminExperienceController(ExperienceRepository experiences) { this.experiences = experiences; }
+    private final ExperienceService experienceService;
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("experiences", experiences.findAllByOrderBySortOrderAsc());
+        model.addAttribute("experiences", experienceService.findAll());
         return "admin/experience/list";
     }
 
@@ -36,7 +36,7 @@ public class AdminExperienceController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("experience", experiences.findById(id)
+        model.addAttribute("experience", experienceService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
         return "admin/experience/form";
     }
@@ -45,14 +45,14 @@ public class AdminExperienceController {
     public String save(@Valid @ModelAttribute Experience experience, BindingResult result,
                        RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) return "admin/experience/form";
-        experiences.save(experience);
+        experienceService.save(experience);
         redirectAttributes.addFlashAttribute("success", "Experience saved.");
         return "redirect:/admin/experience";
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        experiences.deleteById(id);
+        experienceService.delete(id);
         redirectAttributes.addFlashAttribute("success", "Experience deleted.");
         return "redirect:/admin/experience";
     }

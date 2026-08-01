@@ -17,6 +17,10 @@ spring:
     enabled: true
   thymeleaf:
     cache: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
 server:
   port: ${SERVER_PORT:9090}
   error:
@@ -25,6 +29,8 @@ server:
   forward-headers-strategy: framework
 
 portfolio:
+  storage:
+    upload-directory: ${PORTFOLIO_UPLOAD_DIR:uploads}
   admin:
     username: ${ADMIN_USERNAME:admin}
     password: ${ADMIN_PASSWORD:ChangeMe123!}

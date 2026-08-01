@@ -26,6 +26,26 @@
                             <span th:text="${item.location}">Location</span>
                         </div>
                         <p th:text="${item.summary}">Summary</p>
+                        <div class="experience-details" th:if="${not #lists.isEmpty(item.projectItems) or not #lists.isEmpty(item.skillItems) or not #lists.isEmpty(item.achievementItems)}">
+                            <section class="experience-detail" th:if="${not #lists.isEmpty(item.projectItems)}">
+                                <h3><span>01</span> Projects</h3>
+                                <ul class="experience-detail-list">
+                                    <li th:each="project : ${item.projectItems}" th:text="${project}">Project</li>
+                                </ul>
+                            </section>
+                            <section class="experience-detail" th:if="${not #lists.isEmpty(item.skillItems)}">
+                                <h3><span>02</span> Skills</h3>
+                                <div class="experience-skill-tags">
+                                    <span th:each="skill : ${item.skillItems}" th:text="${skill}">Skill</span>
+                                </div>
+                            </section>
+                            <section class="experience-detail" th:if="${not #lists.isEmpty(item.achievementItems)}">
+                                <h3><span>03</span> Achievements</h3>
+                                <ul class="experience-detail-list achievement-list">
+                                    <li th:each="achievement : ${item.achievementItems}" th:text="${achievement}">Achievement</li>
+                                </ul>
+                            </section>
+                        </div>
                     </div>
                 </article>
             </section>

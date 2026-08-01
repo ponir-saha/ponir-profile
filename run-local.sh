@@ -44,11 +44,33 @@ is_running() {
     kill -0 "$pid" 2>/dev/null
 }
 
+process_is_portfolio() {
+    local pid="${1:-}"
+    [[ "$pid" =~ ^[0-9]+$ ]] || return 1
+    ps -p "$pid" -o command= 2>/dev/null | grep -Fq "java -jar $JAR_FILE"
+}
+
 is_our_process() {
     local pid
     pid="$(pid_value)"
-    [[ "$pid" =~ ^[0-9]+$ ]] || return 1
-    ps -p "$pid" -o command= 2>/dev/null | grep -Fq "profile-bio-0.0.1-SNAPSHOT.jar"
+    process_is_portfolio "$pid"
+}
+
+port_owner_pid() {
+    if command -v lsof >/dev/null 2>&1; then
+        lsof -tiTCP:"$PORT" -sTCP:LISTEN 2>/dev/null | sed -n '1p'
+    fi
+}
+
+recover_managed_pid() {
+    local owner_pid
+    owner_pid="$(port_owner_pid)"
+    if process_is_portfolio "$owner_pid"; then
+        echo "$owner_pid" > "$PID_FILE"
+        echo "Recovered portfolio process on port $PORT (PID $owner_pid)."
+        return 0
+    fi
+    return 1
 }
 
 port_is_in_use() {
@@ -130,6 +152,11 @@ wait_for_application() {
 }
 
 start_app() {
+    if ! is_running; then
+        rm -f "$PID_FILE"
+        recover_managed_pid || true
+    fi
+
     if is_running; then
         if is_our_process; then
             echo "Portfolio is already running (PID $(pid_value)) at http://localhost:$PORT"
@@ -137,6 +164,11 @@ start_app() {
         fi
         echo "Removing a stale PID file that points to another process."
         rm -f "$PID_FILE"
+        recover_managed_pid || true
+        if is_running && is_our_process; then
+            echo "Portfolio is already running (PID $(pid_value)) at http://localhost:$PORT"
+            return 0
+        fi
     fi
 
     if port_is_in_use; then
@@ -169,10 +201,17 @@ start_app() {
 }
 
 stop_app() {
+    if is_running && ! is_our_process; then
+        echo "Removing a stale PID file that points to another process."
+        rm -f "$PID_FILE"
+    fi
+
     if ! is_running; then
         rm -f "$PID_FILE"
-        echo "Portfolio is not running."
-        return 0
+        if ! recover_managed_pid; then
+            echo "Portfolio is not running."
+            return 0
+        fi
     fi
 
     local pid attempt
@@ -200,6 +239,10 @@ stop_app() {
 
 show_status() {
     local app_status=1
+    if ! is_running; then
+        rm -f "$PID_FILE"
+        recover_managed_pid || true
+    fi
     if is_running; then
         echo "Application: RUNNING (PID $(pid_value))"
         echo "Website:     http://localhost:$PORT"

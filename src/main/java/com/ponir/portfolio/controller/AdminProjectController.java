@@ -1,9 +1,10 @@
 package com.ponir.portfolio.controller;
 
 import com.ponir.portfolio.domain.Project;
-import com.ponir.portfolio.repository.ProjectRepository;
-import com.ponir.portfolio.service.SlugService;
+import com.ponir.portfolio.service.ProjectService;
+import com.ponir.portfolio.service.ImageStorageException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,23 +14,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/projects")
+@RequiredArgsConstructor
 public class AdminProjectController {
-    private final ProjectRepository projects;
-    private final SlugService slugService;
-
-    public AdminProjectController(ProjectRepository projects, SlugService slugService) {
-        this.projects = projects;
-        this.slugService = slugService;
-    }
+    private final ProjectService projectService;
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("projects", projects.findAllByOrderBySortOrderAsc());
+        model.addAttribute("projects", projectService.findAll());
         return "admin/projects/list";
     }
 
@@ -41,47 +39,35 @@ public class AdminProjectController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("project", projects.findById(id)
+        model.addAttribute("project", projectService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
         return "admin/projects/form";
     }
 
     @PostMapping
     public String save(@Valid @ModelAttribute Project form, BindingResult result,
+                       @RequestParam(required = false) MultipartFile projectImage,
                        RedirectAttributes redirectAttributes) {
-        String slug = slugService.slugify(form.getSlug() == null || form.getSlug().isBlank() ? form.getTitle() : form.getSlug());
-        Long currentId = form.getId() == null ? -1L : form.getId();
-        if (projects.existsBySlugAndIdNot(slug, currentId)) {
+        String slug = projectService.resolveSlug(form);
+        if (projectService.slugExists(slug, form.getId())) {
             result.rejectValue("slug", "duplicate", "This slug is already in use.");
         }
         if (result.hasErrors()) return "admin/projects/form";
 
-        Project target = form.getId() == null ? new Project() : projects.findById(form.getId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        copy(form, target);
-        target.setSlug(slug);
-        projects.save(target);
+        try {
+            projectService.save(form, slug, projectImage);
+        } catch (ImageStorageException exception) {
+            result.reject("imageUpload", exception.getMessage());
+            return "admin/projects/form";
+        }
         redirectAttributes.addFlashAttribute("success", "Project saved.");
         return "redirect:/admin/projects";
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        projects.deleteById(id);
+        projectService.delete(id);
         redirectAttributes.addFlashAttribute("success", "Project deleted.");
         return "redirect:/admin/projects";
-    }
-
-    private void copy(Project from, Project to) {
-        to.setTitle(from.getTitle());
-        to.setEyebrow(from.getEyebrow());
-        to.setSummary(from.getSummary());
-        to.setDescription(from.getDescription());
-        to.setTechStack(from.getTechStack());
-        to.setGithubUrl(from.getGithubUrl());
-        to.setLiveUrl(from.getLiveUrl());
-        to.setFeatured(from.isFeatured());
-        to.setPublished(from.isPublished());
-        to.setSortOrder(from.getSortOrder());
     }
 }

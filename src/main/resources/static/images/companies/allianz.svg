@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Allianz Technology</title>
+  <rect width="64" height="64" rx="16" fill="#064c98"/>
+  <circle cx="32" cy="32" r="20" fill="none" stroke="#fff" stroke-width="3"/>
+  <path d="M19 39 27 19h5l-8 20zm13 0 4-20h5l4 20z" fill="#fff"/>
+</svg>

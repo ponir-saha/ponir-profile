@@ -22,15 +22,36 @@
                         <div><dt><span th:text="${profile.engineersMentored}">10</span>+</dt><dd>engineers led</dd></div>
                     </dl>
                 </div>
-                <div class="architecture-visual" aria-hidden="true">
-                    <div class="orbit orbit-one"></div>
-                    <div class="orbit orbit-two"></div>
-                    <span class="node node-core">Strategy</span>
-                    <span class="node node-api">APIs</span>
-                    <span class="node node-ai">AI</span>
-                    <span class="node node-data">Data</span>
-                    <span class="node node-cloud">Cloud</span>
-                </div>
+                <figure class="system-visual" role="img" aria-label="Animated production architecture connecting clients, an API gateway, Spring services, Kafka, AI retrieval, PostgreSQL, Redis, and OpenSearch">
+                    <figcaption class="system-visual-head">
+                        <span><i></i> Production architecture</span>
+                        <small>requests · events · knowledge</small>
+                    </figcaption>
+                    <div class="system-canvas">
+                        <svg class="system-links" viewBox="0 0 360 360" preserveAspectRatio="none" aria-hidden="true">
+                            <path class="system-link request-link" d="M101 52 H137"/>
+                            <path class="system-link request-link delay-one" d="M193 79 V108 Q193 117 184 117 H180"/>
+                            <path class="system-link request-link delay-two" d="M229 145 H259"/>
+                            <path class="system-link event-link" d="M180 173 V212"/>
+                            <path class="system-link data-link delay-one" d="M151 173 V286 H59 V300"/>
+                            <path class="system-link data-link delay-two" d="M180 173 V300"/>
+                            <path class="system-link ai-link" d="M304 173 V300"/>
+                            <path class="system-link event-link delay-one" d="M148 240 H116 V286 H59 V300"/>
+                            <path class="system-link event-link delay-two" d="M180 268 V300"/>
+                            <path class="system-link event-link delay-three" d="M212 240 H244 V286 H302 V300"/>
+                        </svg>
+
+                        <span class="system-node client-node"><small>Edge</small><strong>Clients</strong></span>
+                        <span class="system-node gateway-node"><small>Ingress</small><strong>API Gateway</strong></span>
+                        <span class="system-node services-node primary-node"><small>Domain</small><strong>Spring Services</strong></span>
+                        <span class="system-node ai-node"><small>Intelligence</small><strong>AI · RAG</strong></span>
+                        <span class="system-node event-node"><small>Async</small><strong>Kafka Events</strong></span>
+                        <span class="system-node database-node"><small>Source of truth</small><strong>PostgreSQL</strong></span>
+                        <span class="system-node cache-node"><small>Fast state</small><strong>Redis</strong></span>
+                        <span class="system-node search-node"><small>Retrieval</small><strong>OpenSearch</strong></span>
+                    </div>
+                    <div class="system-legend" aria-hidden="true"><span class="request-key">Request</span><span class="event-key">Event</span><span class="data-key">Data</span></div>
+                </figure>
             </section>
 
             <section class="section-heading reveal">

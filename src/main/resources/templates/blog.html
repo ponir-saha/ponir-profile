@@ -8,7 +8,7 @@
         <header th:replace="~{fragments/public :: topbar('Writing')}"></header>
         <main class="content-stack">
             <section class="page-title blog-heading reveal">
-                <div><p class="eyebrow">Engineering notes</p><h1>Ideas made useful<br><span>through practice.</span></h1></div>
+                <div><p class="eyebrow">Engineering notes</p><h1 class="writing-page-title">Ideas made useful<br><span>through practice.</span></h1></div>
                 <form class="search-form" th:action="@{/blog}" method="get">
                     <label for="query">Search the writing</label>
                     <div><input id="query" name="query" type="search" th:value="${query}" placeholder="Architecture, RAG, Kafka…"><button type="submit">Search</button></div>

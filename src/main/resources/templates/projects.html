@@ -13,20 +13,25 @@
                 <p class="lead">A selection of platforms where architecture, workflow design, and product thinking had to work together.</p>
             </section>
             <section class="projects-grid reveal">
-                <article class="project-card" th:each="project, stat : ${projects}">
+                <article class="project-card" th:each="project, stat : ${projects}" th:classappend="${project.imageUrl != null and !project.imageUrl.isBlank()} ? 'has-image'">
+                    <img class="project-card-image" th:if="${project.imageUrl != null and !project.imageUrl.isBlank()}" th:src="${project.imageUrl}" th:alt="${project.title}">
                     <div class="project-card-top">
                         <span class="project-number" th:text="${'0' + (stat.index + 1)}">01</span>
                         <span class="status-badge" th:if="${project.featured}">Featured</span>
                     </div>
                     <p class="eyebrow" th:text="${project.eyebrow}">SaaS</p>
-                    <h2 th:text="${project.title}">Project</h2>
+                    <h2><a th:href="@{/projects/{slug}(slug=${project.slug})}" th:text="${project.title}">Project</a></h2>
                     <p th:text="${project.summary}">Summary</p>
                     <div class="tag-row wrap">
                         <span th:each="tech : ${#strings.arraySplit(project.techStack, ',')}" th:text="${#strings.trim(tech)}">Spring Boot</span>
                     </div>
                     <div class="project-links">
-                        <a th:href="@{/projects/{slug}(slug=${project.slug})}">Case study →</a>
-                        <a th:if="${project.githubUrl}" th:href="${project.githubUrl}" target="_blank" rel="noreferrer">GitHub ↗</a>
+                        <a class="project-link-primary" th:href="@{/projects/{slug}(slug=${project.slug})}">View project <span>→</span></a>
+                        <a th:if="${project.liveUrl != null and !project.liveUrl.isBlank()}" th:href="${project.liveUrl}" target="_blank" rel="noreferrer">Live site ↗</a>
+                        <a class="github-link" th:if="${project.githubUrl != null and !project.githubUrl.isBlank()}" th:href="${project.githubUrl}" target="_blank" rel="noreferrer">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3.3-.4 6.8-1.6 6.8-7A5.4 5.4 0 0 0 19.3 4 5 5 0 0 0 19.1.5S18 0 15 1.8a13.4 13.4 0 0 0-6 0C6 0 4.9.5 4.9.5A5 5 0 0 0 4.7 4a5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.5 6.6 6.8 7A4.8 4.8 0 0 0 9 18v4M9 18c-4.5 2-5-2-7-2"/></svg>
+                            GitHub
+                        </a>
                     </div>
                 </article>
             </section>

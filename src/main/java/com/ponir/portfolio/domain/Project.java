@@ -33,6 +33,8 @@ public class Project {
     @Size(max = 800)
     private String techStack;
     @Size(max = 500)
+    private String imageUrl;
+    @Size(max = 500)
     private String githubUrl;
     @Size(max = 500)
     private String liveUrl;
@@ -59,6 +61,8 @@ public class Project {
     public void setDescription(String description) { this.description = description; }
     public String getTechStack() { return techStack; }
     public void setTechStack(String techStack) { this.techStack = techStack; }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
     public String getGithubUrl() { return githubUrl; }
     public void setGithubUrl(String githubUrl) { this.githubUrl = githubUrl; }
     public String getLiveUrl() { return liveUrl; }

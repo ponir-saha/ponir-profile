@@ -6,11 +6,14 @@ A responsive personal website built with Spring Boot, Thymeleaf, PostgreSQL, Fly
 
 - Public home, about, experience, projects, project detail, blog, article, and contact pages
 - Résumé-based starter content and the supplied professional portrait
-- Dynamic profile, metrics, skills, work history, projects, and blog posts
+- Dynamic profile, metrics, social links (including WhatsApp), skills, work history, projects, and blog posts
 - Blog search, drafts, publication status, featured posts, slugs, and optional article images
 - Secure admin CMS at `/admin`
+- Secure local image uploads for the profile, projects, and blog posts
 - Contact inbox stored in PostgreSQL, including unread state and email-reply links
 - Dark/light themes and a responsive mobile navigation
+- Grouped capability areas, a focused experience timeline, and linked project case studies
+- Structured technical articles with headings, lists, inline code, and fenced code blocks
 - PostgreSQL schema management with Flyway
 - Docker Compose database setup
 - Disposable H2 preview profile for UI work when Docker is unavailable
@@ -89,6 +92,7 @@ The default preview login is `admin` / `ChangeMe123!`. Never use that password o
 | `SERVER_PORT` | `9090` | Spring Boot server port; overrides `APP_PORT` in the launcher |
 | `ADMIN_USERNAME` | `admin` | CMS username |
 | `ADMIN_PASSWORD` | `ChangeMe123!` | CMS password; change before deployment |
+| `PORTFOLIO_UPLOAD_DIR` | `uploads` | Persistent directory for admin-uploaded images |
 
 The Compose database values can also be set with `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, and `POSTGRES_PORT`. See `.env.example`.
 
@@ -96,14 +100,20 @@ The Compose database values can also be set with `POSTGRES_DB`, `POSTGRES_USER`,
 
 After signing in, the CMS provides:
 
-- **Profile:** identity, hero copy, biography, contact details, links, image paths, résumé path, and metrics
+- **Profile:** identity, hero copy, biography, contact details, configurable LinkedIn/GitHub/WhatsApp links, portrait upload, résumé path, and metrics
 - **Skills:** category, proficiency, display order, and homepage feature flag
-- **Experience:** company, title, location, date labels, summary, current-role flag, and display order
-- **Projects:** title, slug, description, tech stack, links, visibility, homepage feature flag, and display order
-- **Blog posts:** title, slug, category, excerpt, content, optional image URL, draft/published status, and featured flag
+- **Experience:** company, title, location, dates, summary, project highlights, skills, achievements, current-role flag, and display order
+- **Projects:** title, slug, description, tech stack, project image, links, visibility, homepage feature flag, and display order
+- **Blog posts:** title, slug, category, excerpt, content, featured image, draft/published status, and featured flag
 - **Messages:** contact submissions, read state, reply link, and deletion
 
-Article and project text is rendered as escaped plain text with paragraph breaks preserved. This keeps authoring simple and prevents stored HTML from becoming an injection path.
+Article bodies support a focused Markdown subset: `##`/`###` headings, `-` bullet lists, inline backtick code, and fenced code blocks such as <code>```java</code>. Input is HTML-escaped before rendering. Project descriptions remain escaped plain text with paragraph breaks preserved.
+
+Uploaded images are validated as JPG, PNG, WebP, GIF, or AVIF files up to 10 MB and served from `/uploads/**`. Keep `PORTFOLIO_UPLOAD_DIR` on persistent storage in production; the local `uploads/` directory is ignored by Git.
+
+## Application architecture
+
+The web layer follows a controller → service → repository boundary. Controllers handle routing, validation results, and view models; transactional services own content workflows and persistence access. Lombok `@RequiredArgsConstructor` keeps constructor injection concise without using JPA-unfriendly entity `@Data` generation.
 
 ## Tests and build
 

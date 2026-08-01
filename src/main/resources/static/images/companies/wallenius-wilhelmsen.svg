@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Wallenius Wilhelmsen Logistics</title>
+  <rect width="64" height="64" rx="16" fill="#fff"/>
+  <path d="M8 17h10l6 26 6-26h8l6 26 6-26h8L49 50H39l-5-20-5 20H19z" fill="#183b63"/>
+  <path d="M8 50h48" stroke="#ef7d22" stroke-width="4"/>
+</svg>

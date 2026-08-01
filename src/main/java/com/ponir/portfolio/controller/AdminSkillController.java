@@ -1,8 +1,9 @@
 package com.ponir.portfolio.controller;
 
 import com.ponir.portfolio.domain.Skill;
-import com.ponir.portfolio.repository.SkillRepository;
+import com.ponir.portfolio.service.SkillService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,14 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/skills")
+@RequiredArgsConstructor
 public class AdminSkillController {
-    private final SkillRepository skills;
-
-    public AdminSkillController(SkillRepository skills) { this.skills = skills; }
+    private final SkillService skillService;
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("skills", skills.findAllByOrderByCategoryAscSortOrderAscNameAsc());
+        model.addAttribute("skills", skillService.findAll());
         return "admin/skills/list";
     }
 
@@ -36,7 +36,7 @@ public class AdminSkillController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Long id, Model model) {
-        model.addAttribute("skill", skills.findById(id)
+        model.addAttribute("skill", skillService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
         return "admin/skills/form";
     }
@@ -45,14 +45,14 @@ public class AdminSkillController {
     public String save(@Valid @ModelAttribute Skill skill, BindingResult result,
                        RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) return "admin/skills/form";
-        skills.save(skill);
+        skillService.save(skill);
         redirectAttributes.addFlashAttribute("success", "Skill saved.");
         return "redirect:/admin/skills";
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        skills.deleteById(id);
+        skillService.delete(id);
         redirectAttributes.addFlashAttribute("success", "Skill deleted.");
         return "redirect:/admin/skills";
     }

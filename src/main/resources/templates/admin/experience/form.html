@@ -7,6 +7,12 @@
 <div class="form-grid two"><label><span>Company</span><input th:field="*{company}" required><small class="field-error" th:errors="*{company}"></small></label><label><span>Role title</span><input th:field="*{title}" required><small class="field-error" th:errors="*{title}"></small></label></div>
 <div class="form-grid three"><label><span>Location</span><input th:field="*{location}"></label><label><span>Start label</span><input th:field="*{startLabel}" placeholder="Apr 2026" required></label><label><span>End label</span><input th:field="*{endLabel}" placeholder="Present"></label></div>
 <label><span>Role summary</span><textarea th:field="*{summary}" rows="7" required></textarea><small class="field-error" th:errors="*{summary}"></small></label>
+<div class="form-section"><h3>Projects, skills, and achievements</h3><p>These appear as organized sections inside the public experience card.</p></div>
+<div class="form-grid two">
+    <label><span>Project highlights</span><textarea th:field="*{projectHighlights}" rows="7" placeholder="One project per line"></textarea><small class="field-help">Enter one project or major initiative per line.</small><small class="field-error" th:errors="*{projectHighlights}"></small></label>
+    <label><span>Achievements</span><textarea th:field="*{achievements}" rows="7" placeholder="One achievement per line"></textarea><small class="field-help">Use measurable outcomes where possible, one per line.</small><small class="field-error" th:errors="*{achievements}"></small></label>
+</div>
+<label><span>Skills used</span><textarea th:field="*{skills}" rows="4" placeholder="Java, Spring Boot, Kafka, PostgreSQL"></textarea><small class="field-help">Separate skills with commas; each becomes a tag.</small><small class="field-error" th:errors="*{skills}"></small></label>
 <div class="form-grid two"><label><span>Sort order</span><input type="number" th:field="*{sortOrder}"></label></div><div class="check-row"><label><input type="checkbox" th:field="*{currentRole}"><span>This is the current role</span></label></div>
 <div class="form-actions"><button class="button button-primary">Save role</button><a class="button button-ghost" th:href="@{/admin/experience}">Cancel</a></div></form>
 </main></div></div></body></html>
